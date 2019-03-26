@@ -1,0 +1,9 @@
+FROM haproxy:latest
+USER root
+RUN useradd haproxy \
+    && mkdir /run/haproxy/ \
+    && chown haproxy:haproxy /run/haproxy/
+
+COPY ./haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg 
+EXPOSE 81
+#USER haproxy
