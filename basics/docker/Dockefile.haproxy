@@ -1,7 +1,9 @@
-FROM haproxy:latest
+FROM haproxy:1.9.5
 USER root
-RUN useradd haproxy \
-    && mkdir /run/haproxy/ \
+RUN apt-get update \
+    && apt-get clean \
+    && useradd haproxy \
+    && mkdir /run/haproxy/ /var/lib/haproxy \ 
     && chown haproxy:haproxy /run/haproxy/
 
 COPY ./haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg 
