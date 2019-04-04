@@ -17,9 +17,14 @@ root@6f3209f4c275:/# cat /var/log/nginx/proxylog.log
 #---------------------------------------------------------------------
 listen statspage
     bind *:9000
-    stats       enable     # Enable Stats page. It only works if we have at least a pair of frontend/backend in mode http
-    stats uri   /report    # Enable Stats page on /report
+    mode http
+    stats enable               # Enable Stats page. It only works if we have at least a pair of frontend/backend in mode http
+    stats uri /report          # Enable Stats page on /report
     stats refresh 30s
-    stats auth admin:password1  # Enable auth for stats page
+    stats show-legends
+    stats auth admin:password1 # Enable auth for stats page
+    stats admin if TRUE        # Enable additional actions from dashboard
 ```
+
+The `stats admin` option allows me to perform actions on the webservers, like DRAIN or MAINTAIN
 
