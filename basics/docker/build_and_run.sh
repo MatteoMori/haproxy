@@ -31,4 +31,4 @@ docker run -d --name web1 --net haproxy_network_test web1
 docker run -d --name web2 --net haproxy_network_test web2
 docker run -d --name web1_tcp --net haproxy_network_test web1_tcp
 docker run -d --name web2_tcp --net haproxy_network_test web2_tcp
-docker run -d -p 80:80 -p 81:81 --net haproxy_network_test --name haproxy_matteo haproxy_matteo
+docker run -d -p 80:80 -p 9000:9000 -p 81:81 --net haproxy_network_test --name haproxy_matteo haproxy_matteo
