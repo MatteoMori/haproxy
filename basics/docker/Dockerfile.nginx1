@@ -1,0 +1,5 @@
+FROM nginx:latest
+COPY ./web1/nginx.conf /etc/nginx/nginx.conf
+COPY ./web1/html/ /usr/share/nginx/html
+EXPOSE 80
+
