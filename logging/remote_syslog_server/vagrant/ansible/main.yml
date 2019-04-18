@@ -1,0 +1,41 @@
+---
+- name: Generic config
+  hosts: all 
+  connection: ssh
+  become: true
+  gather_facts: false
+
+  vars:
+    ansible_ssh_user: vagrant 
+
+    # -----------------------------------------------
+    # The following vars should be in vault!
+    # Do not add them in clear text in prod services!
+    # ------------------------------------------------
+
+    ansible_ssh_pass: vagrant 
+    ansible_sudo_pass: vagrant 
+
+  pre_tasks:
+    - name: Update all packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 #One day
+      notify: restart
+
+  roles:
+    - role: ansible-role-syslog-server
+      when: inventory_hostname in groups.syslog
+
+    - role: ansible-role-nginx 
+      when: inventory_hostname in groups.web
+
+
+    - role: ansible-role-haproxy 
+      when: inventory_hostname in groups.lb
+
+  handlers:
+    - name: restart
+      reboot:
+...

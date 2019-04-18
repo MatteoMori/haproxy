@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+# Creates an Ubuntu 16.04 VM
+#   * Run using 'vagrant up'
+#   * SSH using vagrant@192.168.10.10, password 'vagrant'
+
+Vagrant.configure("2") do |config|
+  config.vm.define "syslog1" do |syslog|
+    syslog.vm.box = "bento/ubuntu-16.04"
+      syslog.vm.hostname = "syslog1"
+      syslog.vm.network "private_network", ip: "192.168.50.30"
+    end
+
+  config.vm.define "web11" do |web|
+    web.vm.box = "bento/ubuntu-16.04"
+      web.vm.hostname = "web"
+      web.vm.network "private_network", ip: "192.168.50.31"
+    end
+
+  config.vm.define "lb1" do |lb|
+    lb.vm.box = "bento/ubuntu-16.04"
+      lb.vm.hostname = "lb1"
+      lb.vm.network "private_network", ip: "192.168.50.32"
+    end
+end
+

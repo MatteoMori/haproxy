@@ -1,0 +1,19 @@
+---
+# tasks file for ansible-role-syslog-server
+- name: Enable UDP logging
+  blockinfile:
+    path: /etc/rsyslog.conf 
+    block: |
+     # Enable UDP syslog receiver
+     module(load="imudp")
+     input(type="imudp" port="514")
+  notify: restart_syslog
+
+- name: Configure HAProxy loggings
+  copy:
+    content: |
+      if $programname startswith 'haproxy' then /var/log/haproxy.log
+      if $programname == 'nginx_web1' then /var/log/haproxy_nginx_web1.log
+    dest: /etc/rsyslog.d/haproxy.conf
+  notify: restart_syslog
+...
