@@ -10,7 +10,9 @@ RUN apt-get update \
 COPY syslog_always_alive.sh /tmp/syslog_always_alive.sh
 COPY rsyslog_haproxy.conf /etc/rsyslog.d/haproxy.conf
 
-RUN chmod +x /tmp/syslog_always_alive.sh
+#RUN chmod +x /tmp/syslog_always_alive.sh \\
+#    && /etc/init.d/rsyslog start
 
 EXPOSE 514/udp
-CMD ["/tmp/syslog_always_alive.sh"] 
+CMD /usr/sbin/rsyslogd -d -f /etc/rsyslog.conf -n
+#ENTRYPOINT /etc/init.d/rsyslog start
